@@ -20,6 +20,5 @@ public interface DeptMapper {
     @Select("SELECT * FROM dept WHERE id = #{id}")
     Dept search(Integer id);
 
-    @Mapper
     void update(Dept dept);
 }
