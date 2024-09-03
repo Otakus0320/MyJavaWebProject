@@ -1,16 +1,15 @@
 package com.otakus0320.controller;
 
+import com.otakus0320.pojo.Emp;
 import com.otakus0320.pojo.PageBean;
 import com.otakus0320.pojo.Result;
 import com.otakus0320.service.EmpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @RestController
 @RequestMapping("/emps")
@@ -21,7 +20,7 @@ public class EmpController {
 
     // return emp page
     @GetMapping
-    public Result Page(@RequestParam(defaultValue = "1") Integer page,
+    public Result page(@RequestParam(defaultValue = "1") Integer page,
                        @RequestParam(defaultValue = "10") Integer pageSize,
                        String name, Short gender,
                        @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate begin,
@@ -30,4 +29,17 @@ public class EmpController {
         return Result.success(pageBean);
     }
 
+    // delete emp
+    @DeleteMapping("/{ids}")
+    public Result delete(@PathVariable List<Integer> ids){
+        empService.delete(ids);
+        return Result.success();
+    }
+
+    // save emp
+    @PostMapping
+    public Result save(@RequestBody Emp emp){
+        empService.save(emp);
+        return Result.success();
+    }
 }
